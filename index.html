@@ -52,6 +52,9 @@ input,select{padding:8px;border-radius:10px;border:1px solid #ccc;margin:5px;wid
 </div>
 
 <script>
+function formatCOP(num){
+ return num.toLocaleString('es-CO');
+}
 let db=JSON.parse(localStorage.getItem('db2'))||{cats:[],gastos:[]};
 
 function save(){localStorage.setItem('db2',JSON.stringify(db));}
@@ -108,7 +111,7 @@ function render(){
   total+=sum;
 
   let div=document.createElement('div');div.className='card';
-  let h=document.createElement('h3');h.textContent=`${c.name} ($${sum})`;
+  let h=document.createElement('h3');h.textContent=`${c.name} ($${formatCOP(sum)})`;
   h.onclick=()=>toggle(i);
 
   let b1=document.createElement('button');b1.textContent='+';b1.onclick=()=>addSub(i);
@@ -131,13 +134,13 @@ function render(){
  let tg=0;
  db.gastos.forEach((g,i)=>{
   tg+=g.v;
-  let li=document.createElement('li');li.textContent=`${g.n}: $${g.v}`;
+  let li=document.createElement('li');li.textContent=`${g.n}: $${formatCOP(g.v)}`;
   let d=document.createElement('button');d.textContent='❌';d.onclick=()=>delGasto(i);
   li.appendChild(d);
   gList.appendChild(li);
  });
 
- document.getElementById('total').textContent=total-tg;
+ document.getElementById('total').textContent=formatCOP(total-tg);
 }
 
 render();
